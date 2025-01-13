@@ -1,14 +1,15 @@
 import DatabaseConnection from "../core/connection.ts";
+import "@std/dotenv/load";
 
-const dbOptions = {
-  user: "postgres",
-  password: "user.root",
-  database: "deno_db",
-  hostname: "localhost",
-  port: 5432,
+const databaseOptions = {
+  user: Deno.env.get("DB_USER") || "",
+  password: Deno.env.get("DB_PASSWORD") || "",
+  database: Deno.env.get("DB_NAME") || "", 
+  hostname: Deno.env.get("DB_HOST") || "",
+  port: parseInt(Deno.env.get("DB_PORT") || "")
 };
 
-const db = new DatabaseConnection(dbOptions);
+const db = new DatabaseConnection(databaseOptions);
 
 try {
   await db.connect();
